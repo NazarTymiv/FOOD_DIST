@@ -234,8 +234,9 @@ window.addEventListener('DOMContentLoaded', () => {
           nextBtn = document.querySelector('.offer__slider-next'),
           slidesWrapper = document.querySelector('.offer__slider-wrapper'),
           slidesField = document.querySelector('.offer__slider-inner'),
-          widthSliderWrapper = window.getComputedStyle(slidesWrapper).width
-    
+          widthSliderWrapper = window.getComputedStyle(slidesWrapper).width,
+          dots = []
+
     let numberSlide = 1
 
     slidesField.style.width = `${100 * slides.length}%`
@@ -247,6 +248,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const SelectingSlide = (num) => {
         slidesField.style.transform = `translateX(-${+widthSliderWrapper.slice(0, -2) * (num - 1)}px)`
         document.querySelector('#current').innerHTML = getzero(num)
+        dots.forEach(dot => dot.style.opacity = '.5')
+        dots[num-1].style.opacity = 1
     }
 
     prevBtn.addEventListener('click', () => {
@@ -257,6 +260,29 @@ window.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', () => {
         numberSlide > slides.length - 1 ? numberSlide = 1 : numberSlide++
         SelectingSlide(numberSlide)
+    })
+
+
+
+    // SLIDER NAVIGATION
+    const indicators = document.createElement('ol')
+          
+    indicators.classList.add('carousel-indicators')
+    document.querySelector('.offer__slider').append(indicators)
+
+    slides.forEach((item, index) => {
+        const dot = document.createElement('li')
+        dot.classList.add('dot')
+        dot.setAttribute('data-slide-to', index + 1)
+        indicators.append(dot)
+        dots.push(dot)
+    })
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            numberSlide = index + 1
+            SelectingSlide(numberSlide)
+        })
     })
 
     SelectingSlide(numberSlide)
