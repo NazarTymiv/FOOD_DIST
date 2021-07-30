@@ -266,7 +266,12 @@ a{
 .offer__slider-wrapper{
 	width:100%;
 	margin-top:15px;
-	box-shadow:0 4px 30px rgba(0,0,0,.25)
+	box-shadow:0 4px 30px rgba(0,0,0,.25);
+	overflow: hidden;
+}
+.offer__slider-inner{
+	display: flex;
+	transition: 0.5s all;
 }
 .offer__slider-prev{
 	margin-right:10px;

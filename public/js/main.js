@@ -109,9 +109,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', openModalScroll)
 
-
-
-
     // USE CLASSES FOR CARDS
     const menu__fieldContainer = document.querySelector('.menu__fieldContainer')
 
@@ -153,13 +150,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     axios.get('/menu')
-        .then(data => data.data.forEach(obj => new Card(obj).render()))
-        
-
-
-
-
-    
+        .then(data => data.data.forEach(obj => new Card(obj).render())) 
 
     // FORM
     const forms = document.querySelectorAll('form')
@@ -237,35 +228,36 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 4000)
     }
 
-
-
-
     // SLIDER
     const slides = document.querySelectorAll('.offer__slide'),
           prevBtn = document.querySelector('.offer__slider-prev'),
-          nextBtn = document.querySelector('.offer__slider-next')
+          nextBtn = document.querySelector('.offer__slider-next'),
+          slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+          slidesField = document.querySelector('.offer__slider-inner'),
+          widthSliderWrapper = window.getComputedStyle(slidesWrapper).width
     
-    let numberSlide = 0
+    let numberSlide = 1
 
+    slidesField.style.width = `${100 * slides.length}%`
+    slides.forEach(slide => {
+        slide.style.width = widthSliderWrapper
+    })
     document.querySelector('#total').innerHTML = getzero(slides.length)
 
-    const SelectSlide = (num) => {
-        slides.forEach(item => {
-            item.style.display = 'none'
-        })
-        slides[num].style.display = 'block'
-        document.querySelector('#current').innerHTML = getzero(numberSlide + 1)
+    const SelectingSlide = (num) => {
+        slidesField.style.transform = `translateX(-${+widthSliderWrapper.slice(0, -2) * (num - 1)}px)`
+        document.querySelector('#current').innerHTML = getzero(num)
     }
 
     prevBtn.addEventListener('click', () => {
-        numberSlide <= 0 ? numberSlide = slides.length - 1 : numberSlide--
-        SelectSlide(numberSlide)
+        numberSlide <= 1 ? numberSlide = slides.length : numberSlide--
+        SelectingSlide(numberSlide)
     })
 
     nextBtn.addEventListener('click', () => {
-        numberSlide >= slides.length - 1 ? numberSlide = 0 : numberSlide++
-        SelectSlide(numberSlide)
+        numberSlide > slides.length - 1 ? numberSlide = 1 : numberSlide++
+        SelectingSlide(numberSlide)
     })
 
-    SelectSlide(numberSlide)
+    SelectingSlide(numberSlide)
 })
