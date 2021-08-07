@@ -1,9 +1,9 @@
-const slider = () => {
-    const slides = document.querySelectorAll('.offer__slide'),
-          prevBtn = document.querySelector('.offer__slider-prev'),
-          nextBtn = document.querySelector('.offer__slider-next'),
-          slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-          slidesField = document.querySelector('.offer__slider-inner'),
+const slider = ({slide, nextArrow, prevArrow, wrapper, field}) => {
+    const slides = document.querySelectorAll(slide),
+          prevBtn = document.querySelector(prevArrow),
+          nextBtn = document.querySelector(nextArrow),
+          slidesWrapper = document.querySelector(wrapper),
+          slidesField = document.querySelector(field),
           widthSliderWrapper = window.getComputedStyle(slidesWrapper).width,
           dots = []
 
@@ -71,4 +71,4 @@ const slider = () => {
     SelectingSlide(numberSlide)
 }
 
-module.exports = slider
+export default slider

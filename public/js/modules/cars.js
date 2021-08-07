@@ -42,4 +42,4 @@ const cards = () => {
         .then(data => data.data.forEach(obj => new Card(obj).render())) 
 }
 
-module.exports = cards
+export default cards

@@ -1,32 +1,36 @@
-const modal = () => {
-    const modalOpenBtn = document.querySelectorAll('[data-modal]'),
-          modalBlock = document.querySelector('.modal')
+const showModal = (modalSelector) => {
+    const modalBlock = document.querySelector(modalSelector)
 
-    const showModal = () => {
-        modalBlock.classList.add('show')
-        modalBlock.classList.remove('hide')
-        document.body.style.overflow = 'hidden'
-    }
+    modalBlock.classList.add('show')
+    modalBlock.classList.remove('hide')
+    document.body.style.overflow = 'hidden'
+}
+
+const hideModal = (modalSelector) => {
+    const modalBlock = document.querySelector(modalSelector)
+
+    modalBlock.classList.remove('show')
+    modalBlock.classList.add('hide')
+    document.body.style.overflow = 'auto'
+}
+
+const modal = (triggerSelector, modalSelector) => {
+    const modalOpenBtn = document.querySelectorAll(triggerSelector),
+          modalBlock = document.querySelector(modalSelector)
 
     modalOpenBtn.forEach(item => {
-        item.addEventListener('click', showModal)
+        item.addEventListener('click', () => showModal(modalSelector))
     })
-
-    const hideModal = () => {
-        modalBlock.classList.remove('show')
-        modalBlock.classList.add('hide')
-        document.body.style.overflow = 'auto'
-    }
 
     modalBlock.addEventListener('click', e => {
         if(e.target === modalBlock || e.target.getAttribute('data-close') == '') {
-            hideModal()
+            hideModal(modalSelector)
         }
     })
 
     const openModalScroll = () => {
         if(window.pageYOffset + document.documentElement.clientHeight == document.body.scrollHeight) {
-            showModal()
+            showModal(modalSelector)
             window.removeEventListener('scroll', openModalScroll)
         }
     }
@@ -34,4 +38,5 @@ const modal = () => {
     window.addEventListener('scroll', openModalScroll)
 }
 
-module.exports = modal
+export default modal
+export {hideModal, showModal}

@@ -1,4 +1,4 @@
-const timer = () => {
+const timer = (deadline) => {
     const getDataForTimer = (deadline) => {
         const time = Date.parse(deadline) - Date.parse(new Date()),
               days = Math.floor(time / (1000 * 60 * 60 * 24)),
@@ -40,7 +40,7 @@ const timer = () => {
         }
     }
 
-    setClock('2021-08-31')
+    setClock(deadline)
 }
 
-module.exports = timer
+export default timer

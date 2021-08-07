@@ -1,6 +1,6 @@
-const tabs = () => {
-    const tabs = document.querySelectorAll('.tabheader__item'),
-          tabsContent = document.querySelectorAll('.tabcontent')
+const tabs = (tabsSelector, tabsContentSelector, activeClass) => {
+    const tabs = document.querySelectorAll(tabsSelector),
+          tabsContent = document.querySelectorAll(tabsContentSelector)
     
     const hideTabContent = () => {
         tabsContent.forEach(item => {
@@ -9,12 +9,12 @@ const tabs = () => {
         })
 
         tabs.forEach(item => {
-            item.classList.remove('tabheader__item_active')
+            item.classList.remove(activeClass)
         })
     }
 
     const showTabContent = (index = 0) => {
-        tabs[index].classList.add('tabheader__item_active')
+        tabs[index].classList.add(activeClass)
         tabsContent[index].classList.add('show', 'fade')
         tabsContent[index].classList.remove('hide')
     }
@@ -30,4 +30,4 @@ const tabs = () => {
     showTabContent()
 }
 
-module.exports = tabs
+export default tabs
